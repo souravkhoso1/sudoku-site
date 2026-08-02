@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Daily Sudoku</title>
+<meta name="description" content="A new sudoku puzzle every day. Simple, fast, no sign-up." />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F7F5F0'/%3E%3Cg stroke='%231F2933' stroke-width='6' fill='none'%3E%3Crect x='10' y='10' width='80' height='80'/%3E%3Cline x1='36.6' y1='10' x2='36.6' y2='90'/%3E%3Cline x1='63.3' y1='10' x2='63.3' y2='90'/%3E%3Cline x1='10' y1='36.6' x2='90' y2='36.6'/%3E%3Cline x1='10' y1='63.3' x2='90' y2='63.3'/%3E%3C/g%3E%3C/svg%3E" />
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="2" y="2" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="14.6" y1="2" x2="14.6" y2="38" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="25.3" y1="2" x2="25.3" y2="38" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="2" y1="14.6" x2="38" y2="14.6" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="2" y1="25.3" x2="38" y2="25.3" stroke="currentColor" stroke-width="2.5"/>
+      </svg>
+      <div>
+        <h1>Daily Sudoku</h1>
+        <p class="tagline" id="dateLine">Loading today's puzzle&hellip;</p>
+      </div>
+    </div>
+    <span class="difficulty-badge" id="difficultyBadge" hidden></span>
+  </header>
+
+  <main id="app" aria-live="polite">
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-label">Time</span>
+        <span class="stat-value" id="timerDisplay">00:00</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Mistakes</span>
+        <span class="stat-value" id="mistakesDisplay">0 / 3</span>
+      </div>
+      <button class="btn-ghost" id="restartBtn" type="button">Restart</button>
+    </div>
+
+    <div class="board-area">
+      <div class="board" id="board" role="grid" aria-label="Sudoku board"></div>
+    </div>
+
+    <div class="numpad" id="numpad" aria-label="Number entry">
+      <button type="button" data-num="1">1</button>
+      <button type="button" data-num="2">2</button>
+      <button type="button" data-num="3">3</button>
+      <button type="button" data-num="4">4</button>
+      <button type="button" data-num="5">5</button>
+      <button type="button" data-num="6">6</button>
+      <button type="button" data-num="7">7</button>
+      <button type="button" data-num="8">8</button>
+      <button type="button" data-num="9">9</button>
+      <button type="button" data-num="0" class="erase" aria-label="Erase">⌫</button>
+    </div>
+
+    <p class="hint">Tap a cell, then a number. Wrong entries are flagged instantly — three mistakes and it's a restart.</p>
+
+  </main>
+
+  <footer class="footer">
+    <p>Puzzles are generated daily and stored in this site's git repository. Your progress is saved on this device only.</p>
+  </footer>
+
+</div>
+
+<!-- Mistake-limit / restart modal -->
+<div class="modal-backdrop" id="restartModal" hidden>
+  <div class="modal" role="alertdialog" aria-labelledby="restartTitle">
+    <h2 id="restartTitle">Three mistakes</h2>
+    <p>That's the limit for today's puzzle. Starting over resets the board and the timer.</p>
+    <button class="btn-primary" id="restartConfirmBtn" type="button">Start over</button>
+  </div>
+</div>
+
+<!-- Completion modal -->
+<div class="modal-backdrop" id="winModal" hidden>
+  <div class="modal" role="dialog" aria-labelledby="winTitle">
+    <h2 id="winTitle">Solved it</h2>
+    <dl class="win-stats">
+      <div><dt>Time</dt><dd id="winTime">00:00</dd></div>
+      <div><dt>Mistakes</dt><dd id="winMistakes">0</dd></div>
+      <div><dt>Difficulty</dt><dd id="winDifficulty">—</dd></div>
+    </dl>
+    <div class="modal-actions">
+      <button class="btn-primary" id="downloadCertBtn" type="button">Download certificate</button>
+      <button class="btn-ghost" id="closeWinBtn" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="certCanvas" width="1000" height="600" hidden aria-hidden="true"></canvas>
+
+<script src="js/app.js"></script>
+</body>
+</html>
